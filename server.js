@@ -25,8 +25,8 @@ app.post('/download', (req, res) => {
         output: path.join(__dirname, 'downloads', '%(title)s.%(ext)s'),
         noCheckCertificates: true,
         preferFreeFormats: true,
-        cookies: path.join(__dirname, 'cookies.txt'), // কুকিজ ফাইল যুক্ত করা হলো
-        extractorArgs: 'youtube:player_client=web', // 'n challenge' ও বট সিকিউরিটি বাইপাস করার জন্য
+        // cookies: path.join(__dirname, 'cookies.txt'), // কুকিজ ফাইলটি স্থায়ীভাবে বাদ দেওয়া হলো
+        extractorArgs: 'youtube:player_client=android', // কুকিজ ছাড়াই সরাসরি অ্যান্ড্রয়েড ক্লায়েন্ট ব্যবহার
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
     })
     .then(() => {

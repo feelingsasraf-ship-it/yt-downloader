@@ -1,7 +1,9 @@
 FROM node:18-slim
 
-# yt-dlp চালানোর জন্য পাইথন এবং প্রয়োজনীয় টুলস ইনস্টল করা
-RUN apt-get update && apt-get install -y python3 python3-pip ffmpeg && rm -rf /var/lib/apt/lists/*
+# পাইথন ইনস্টল করার পাশাপাশি পাইথনকে 'python' নামে লিংক (symlink) করে দেওয়া
+RUN apt-get update && apt-get install -y python3 python3-pip ffmpeg && \
+    ln -s /usr/bin/python3 /usr/bin/python && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

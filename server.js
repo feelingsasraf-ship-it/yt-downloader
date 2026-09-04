@@ -4,17 +4,14 @@ const ytDlp = require('yt-dlp-exec');
 
 const app = express();
 
-// মিডলওয়্যার ও স্ট্যাটিক ফোল্ডার সেটআপ
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// হোম পেজ রাউট
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// ডাউনলোড রাউট (POST মেথড)
 app.post('/download', (req, res) => {
     const videoUrl = req.body.url;
     if (!videoUrl) {
@@ -28,8 +25,7 @@ app.post('/download', (req, res) => {
         output: path.join(__dirname, 'downloads', '%(title)s.%(ext)s'),
         noCheckCertificates: true,
         preferFreeFormats: true,
-        cookies: path.join(__dirname, 'cookies.txt'), // কুকিজ ফাইল যুক্ত করা হলো
-        extractorArgs: 'youtube:player_client=android', // জাভাস্ক্রিপ্ট চ্যালেঞ্জ ও বট প্রটেকশন এড়াতে
+        cookies: path.join(__dirname, 'cookies.txt'), // শুধু কুকিজ ফাইল থাকবে
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     })
     .then(() => {

@@ -43,3 +43,12 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
+
+await ytDlp(videoUrl, {
+    format: 'best',
+    output: path.join(__dirname, 'downloads', '%(title)s.%(ext)s'),
+    noCheckCertificates: true,
+    preferFreeFormats: true,
+    extractorArgs: 'youtube:player_client=android', // বটের ঝামেলা এড়াতে অ্যান্ড্রয়েড ক্লায়েন্ট ব্যবহার করা
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+});

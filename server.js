@@ -14,9 +14,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// ডাউনলোড রাউট
-app.get('/download', async (req, res) => {
-    const videoUrl = req.query.url;
+// ডাউনলোড রাউট (POST মেথড)
+app.post('/download', async (req, res) => {
+    const videoUrl = req.body.url; // ফর্ম সাবমিট হলে সাধারণত req.body থেকে নিতে হয়
     if (!videoUrl) {
         return res.status(400).send('দয়া করে একটি ইউটিউব ভিডিওর লিংক দিন!');
     }
@@ -24,7 +24,6 @@ app.get('/download', async (req, res) => {
     try {
         console.log('ভিডিও ডাউনলোড শুরু হচ্ছে...');
         
-        // yt-dlp আর্গুমেন্টস (বট ব্লকিং এড়াতে ইউজার-এজেন্ট ও নিরাপদ ফরম্যাট সহ)
         await execa(videoUrl, [
             '--format', 'best',
             '--output', path.join(__dirname, 'downloads', '%(title)s.%(ext)s'),

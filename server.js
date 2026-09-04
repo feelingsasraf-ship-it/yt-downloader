@@ -25,8 +25,9 @@ app.post('/download', (req, res) => {
         output: path.join(__dirname, 'downloads', '%(title)s.%(ext)s'),
         noCheckCertificates: true,
         preferFreeFormats: true,
-        cookies: path.join(__dirname, 'cookies.txt'), // শুধু কুকিজ ফাইল থাকবে
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        cookies: path.join(__dirname, 'cookies.txt'), // কুকিজ ফাইল যুক্ত করা হলো
+        extractorArgs: 'youtube:player_client=web', // 'n challenge' ও বট সিকিউরিটি বাইপাস করার জন্য
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
     })
     .then(() => {
         res.send('ডাউনলোড সফল হয়েছে!');

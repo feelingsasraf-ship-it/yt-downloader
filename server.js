@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { execa } = require('yt-dlp-exec');
+const ytDlp = require('yt-dlp-exec');
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 
 // ডাউনলোড রাউট (POST মেথড)
 app.post('/download', async (req, res) => {
-    const videoUrl = req.body.url; // ফর্ম সাবমিট হলে সাধারণত req.body থেকে নিতে হয়
+    const videoUrl = req.body.url;
     if (!videoUrl) {
         return res.status(400).send('দয়া করে একটি ইউটিউব ভিডিওর লিংক দিন!');
     }
@@ -24,13 +24,13 @@ app.post('/download', async (req, res) => {
     try {
         console.log('ভিডিও ডাউনলোড শুরু হচ্ছে...');
         
-        await execa(videoUrl, [
-            '--format', 'best',
-            '--output', path.join(__dirname, 'downloads', '%(title)s.%(ext)s'),
-            '--no-check-certificates',
-            '--prefer-free-formats',
-            '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        ]);
+        await ytDlp(videoUrl, {
+            format: 'best',
+            output: path.join(__dirname, 'downloads', '%(title)s.%(ext)s'),
+            noCheckCertificates: true,
+            preferFreeFormats: true,
+            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        });
 
         res.send('ডাউনলোড সফল হয়েছে!');
     } catch (error) {
